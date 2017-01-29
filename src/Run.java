@@ -2,8 +2,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.omg.Messaging.SyncScopeHelper;
-
 
 public class Run {
 	
@@ -14,10 +12,11 @@ public class Run {
 	public static Random r = new Random();
 	
 	public static int tick;
+	public static int maxBalls = 1;
 	
 	public static Player player = new Player();
 	public static ArrayList<Ball> balls = new ArrayList<Ball>();
-	public static Brick[] bricks = new Brick[84]; //  14 * 6 / + 2*6
+	public static Brick[] bricks = new Brick[84];
 	
 	public static boolean leftKey;
 	public static boolean rightKey;
@@ -38,70 +37,35 @@ public class Run {
 		player.y = foreground.pixelHeight - player.height;
 		player.speed = 4;
 		
-//		int brickSpace = 6;
-//		for (int i = 0; i < bricks.length; i++) {
-//			Brick brick = new Brick();
-//			brick.width = 42;
-//			brick.height = 16;
-//			brick.y = 6;
-//			if (i == 15) {
-//				brickSpace = 6;
-//				brick.y += (brick.width + 6)*1;
-//			}
-//			if (i == 29) {
-//				brickSpace = 6;
-//				brick.y += (brick.width + 6)*2;
-//			}
-//			if (i == 43) {
-//				brickSpace = 6;
-//				brick.y += (brick.width + 6)*3;
-//			}
-//			if (i == 57) {
-//				brickSpace = 6;
-//				brick.y += (brick.width + 6)*4;
-//			}
-//			if (i == 71) {
-//				brickSpace = 6;
-//				brick.y += (brick.width + 6)*5;
-//			}
-//			brick.x = i * brick.width + brickSpace;
-//			brick.destroyed = false;
-//			bricks[i] = brick;
-//			brickSpace += 3;
-//		}
-		
 		for (int i = 0; i < bricks.length; i++) {
 			Brick brick = new Brick();
 			brick.width = 42;
 			brick.height = 16;
-			if (i > 70) {
+			if (i >= 70) {
 				brick.y = 6 + (brick.height + 3) * 5;
-				brick.x = 6 + (brick.width + 3) * i - 70;
+				brick.x = 6 + (brick.width + 3) * (i - 70);
 			}
-			else if (i > 56) {
+			else if (i >= 56) {
 				brick.y = 6 + (brick.height + 3) * 4;
-				brick.x = 6 + (brick.width + 3) * i - 56;
+				brick.x = 6 + (brick.width + 3) * (i - 56);
 			}
-			else if (i > 42) {
+			else if (i >= 42) {
 				brick.y = 6 + (brick.height + 3) * 3;
-				brick.x = 6 + (brick.width + 3) * i - 42;
+				brick.x = 6 + (brick.width + 3) * (i - 42);
 			}
-			else if (i > 28) {
+			else if (i >= 28) {
 				brick.y = 6 + (brick.height + 3) * 2;
-				brick.x = 6 + (brick.width + 3) * i - 28;
+				brick.x = 6 + (brick.width + 3) * (i - 28);
 			}
-			else if (i > 14) {
+			else if (i >= 14) {
 				brick.y = 6 + (brick.height + 3) * 1;
-				brick.x = 6 + (brick.width + 3) * i - 14;
+				brick.x = 6 + (brick.width + 3) * (i - 14);
 			}
 			else {
 				brick.y = 6;
 				brick.x = 6 + (brick.width + 3) * i;
 			}
 			brick.destroyed = false;
-			System.out.println(brick.x);
-			System.out.println(brick.y);
-			System.out.println("");
 			bricks[i] = brick;
 			
 		}
@@ -136,7 +100,7 @@ public class Run {
 		if (window.isKeyPressed(Key.LEFT) || window.isKeyPressed(Key.A) || window.isKeyPressed(Key.J)) {
 			leftKey = true;
 		}
-		if (window.isKeyPressed(Key.SPACE)) {
+		if (window.isKeyPressed(Key.SPACE) && balls.size() < maxBalls) {
 			Ball ball = new Ball();
 			ball.x = player.x + player.width / 2 + 0.5;
 			ball.radius = 8;
