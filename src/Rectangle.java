@@ -1,4 +1,4 @@
-public class Rectangle {
+public abstract class Rectangle {
 	public int x;
 	public int y;
 	public int width;

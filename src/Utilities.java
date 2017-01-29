@@ -54,4 +54,15 @@ public class Utilities {
 		double radiusSquared = Math.pow(ball.radius, 2);
 		return distSquared < radiusSquared;
 	}
+	public static boolean checkCollisions(Ball ball, Brick[] bricks) {
+		for (int j = 0; j < bricks.length; j++) {				
+			if (bricks[j].destroyed != true) {
+				if (Utilities.intersectsCircleRect(ball, bricks[j])) {
+					bricks[j].destroyed = true;
+				    return true;
+				}
+			}
+		}
+	    return false;
+	}
 }
